@@ -4,24 +4,20 @@ package com.example.workshopapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
-public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
+public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroLice.ViewHolder> {
 
     private List<Baranje> myList;
     private int rowLayout;
@@ -46,7 +42,7 @@ public class myAdapter extends RecyclerView.Adapter<myAdapter.ViewHolder> {
     }
 
 
-    public myAdapter(List<Baranje> myList, int rowLayout, Context context) {
+    public myAdapterPostaroLice(List<Baranje> myList, int rowLayout, Context context) {
         this.myList = myList;
         this.rowLayout = rowLayout;
         this.mContext = context;

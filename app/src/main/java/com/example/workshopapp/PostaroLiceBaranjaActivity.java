@@ -25,14 +25,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PostaroLiceBaranjaActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
-    private myAdapter mAdapter;
+    private myAdapterPostaroLice mAdapter;
 
     private List<Baranje> list = new ArrayList<>();
 
@@ -52,7 +50,7 @@ public class PostaroLiceBaranjaActivity extends AppCompatActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.list);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAdapter = new myAdapter(list, R.layout.baranje, this);
+        mAdapter = new myAdapterPostaroLice(list, R.layout.baranje, this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -113,4 +111,5 @@ public class PostaroLiceBaranjaActivity extends AppCompatActivity {
             }
         });
     }
+
 }

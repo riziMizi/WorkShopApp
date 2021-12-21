@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intentPostaro = new Intent(this, PostaroLiceActivity.class);
         Intent intentVolonter = new Intent(this, VolonterActivity.class);
-        Intent intentOrganizator = new Intent(this, OrganizatorActivity.class);
 
         if(email.equals("")) {
             editTextEmail.setError("Задолжително поле!");
@@ -108,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
                                     startActivity(intentPostaro);
                                 } else if(tip.equals("Volonter")) {
                                     startActivity(intentVolonter);
-                                } else if(tip.equals("Organizator")) {
-                                    startActivity(intentOrganizator);
                                 }
                             }
                         }

@@ -14,6 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkshopApp">
+        <activity
+            android:name=".VolonterSvojZadaciActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -25,8 +28,7 @@
         <activity
             android:name=".PostaroLiceBaranjaActivity"
             android:exported="false"
-            android:parentActivityName=".PostaroLiceActivity"/>
-
+            android:parentActivityName=".PostaroLiceActivity" />
         <activity
             android:name=".GoogleMapActivity"
             android:exported="false">
@@ -34,9 +36,6 @@
                 android:name="com.google.android.geo.API_KEY"
                 android:value="AIzaSyBfR3jNapVzZ8FPH7d_a0H96ynzwyNV8Bk" />
         </activity>
-        <activity
-            android:name=".OrganizatorActivity"
-            android:exported="false" />
         <activity
             android:name=".VolonterActivity"
             android:exported="false" />

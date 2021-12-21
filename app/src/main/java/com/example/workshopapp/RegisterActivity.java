@@ -57,15 +57,13 @@ public class RegisterActivity extends AppCompatActivity {
         String phone = editTextPhone.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
         String password2 = editTextPassword2.getText().toString().trim();
-        String tip = "Organizator";
+        String tip = "PostaroLice";
 
         int ID = radioGroup.getCheckedRadioButtonId();
         RadioButton radioButton = (RadioButton) findViewById(ID);
 
         if(radioButton.getId() == R.id.radioVolonter) {
             tip = "Volonter";
-        } else if(radioButton.getId() == R.id.radioPovozrasnoLice) {
-            tip = "PostaroLice";
         }
 
         if(name.equals("")) {
@@ -128,7 +126,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    User user = new User(email, phone, finalTip, name);
+                    User user = new User(email, phone, finalTip, name, 0, 0);
 
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user)

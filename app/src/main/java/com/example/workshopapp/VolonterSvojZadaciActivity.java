@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class OrganizatorActivity extends AppCompatActivity {
+public class VolonterSvojZadaciActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_organizator);
+        setContentView(R.layout.activity_volonter_svoj_zadaci);
     }
 }

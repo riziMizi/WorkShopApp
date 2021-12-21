@@ -15,6 +15,7 @@ public class Baranje {
     private double Latitude;
     private String EmailVolonter;
     private String TelefonVolonter;
+    private int Rastojanie;
 
     public Baranje() {
 
@@ -147,5 +148,13 @@ public class Baranje {
 
     public void setTelefonVolonter(String telefonVolonter) {
         TelefonVolonter = telefonVolonter;
+    }
+
+    public int getRastojanie() {
+        return Rastojanie;
+    }
+
+    public void setRastojanie(int rastojanie) {
+        Rastojanie = rastojanie;
     }
 }
