@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        app:title="@string/app_name"
+        android:backgroundTint="@color/teal_200"/>
+
+    <EditText
+        android:id="@+id/RegisterName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Име и презиме"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/RegisterEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterName"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/RegisterPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Лозинка"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterEmail"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/RegisterPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Повторете ја лозинката"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterPassword"
+        android:layout_marginTop="30dp"/>
+
+    <EditText
+        android:id="@+id/RegisterPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Телефонски број"
+        app:layout_constraintTop_toBottomOf="@+id/RegisterPassword2"
+        android:layout_marginTop="30dp"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroupTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/RegisterPhone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:id="@+id/radioOrganizator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Оргранизатор"
+            android:checked="true"/>
+        <RadioButton
+            android:id="@+id/radioVolonter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Волонтер"/>
+        <RadioButton
+            android:id="@+id/radioPovozrasnoLice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Повозрасно лице"/>
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupTip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="20dp"
+        android:text="Регистрирај се"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:onClick="Register"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

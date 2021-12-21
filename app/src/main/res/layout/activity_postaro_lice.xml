@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostaroLiceActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        app:title="@string/app_name"
+        android:backgroundTint="@color/teal_200"/>
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/PostaroLiceNaslov"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Барање за помош"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/txtAktivnost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/PostaroLiceNaslov"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Активност:"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/editTextAktivnost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txtAktivnost"
+            android:layout_marginTop="5dp"
+            android:hint="Внесете активност"/>
+
+        <TextView
+            android:id="@+id/txtOpis"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editTextAktivnost"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Опис на активноста:"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black"/>
+
+        <EditText
+            android:id="@+id/editTextOpis"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/txtOpis"
+            android:hint="Внесете опис на активноста"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/txtFrekfentnost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editTextOpis"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Фрекфентност на активноста:"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupFrekfentnost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editTextOpis"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioEdnokratno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Еднократно"
+                android:checked="true"
+                android:onClick="Frekfencija"
+                android:textColor="@color/black"
+                />
+            <RadioButton
+                android:id="@+id/radioNedelno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Неделно"
+                android:onClick="Frekfencija"
+                android:textColor="@color/black"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/txtVreme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroupFrekfentnost"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="Времетраење и ден:"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/txtSaatOd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txtVreme"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="ОД"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:drawableTop="@drawable/ic_time"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="SelectTime"
+            />
+
+        <TextView
+            android:id="@+id/txtSaatDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txtVreme"
+            app:layout_constraintLeft_toRightOf="@+id/txtSaatOd"
+            android:hint="ДО"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:drawableTop="@drawable/ic_time"
+            android:gravity="center"
+            android:clickable="true"
+            android:onClick="SelectTime"
+            />
+
+        <TextView
+            android:id="@+id/txtDatum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txtVreme"
+            app:layout_constraintLeft_toRightOf="@+id/txtSaatDo"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:hint="Датум"
+            android:drawableTop="@drawable/ic_date"
+            android:gravity="center"
+            android:onClick="SelectDate"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerDenovi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/txtVreme"
+            app:layout_constraintLeft_toRightOf="@+id/txtSaatDo"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:spinnerMode="dialog"
+            android:entries="@array/nizaDenovi"
+            />
+
+    <TextView
+        android:id="@+id/txtLokacijaNaslov"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDenovi"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="Локација:"
+        android:textStyle="bold"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/txtLokacija"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/txtLokacijaNaslov"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:hint="Локација"
+        android:drawableLeft="@drawable/ic_location"
+        android:gravity="left"
+        android:onClick="SelectLocation"
+        />
+    
+    <Button
+        android:id="@+id/buttonZacuvaj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/txtLokacija"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:textColor="@color/black"
+        android:text="Зачувај"
+        android:onClick="ZacuvajAktivnost"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

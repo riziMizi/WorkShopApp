@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        app:title="@string/app_name"
+        android:backgroundTint="@color/teal_200"/>
+
+    <TextView
+        android:id="@+id/txtGlavenNaslov"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/my_toolbar"
+        android:layout_marginTop="15dp"
+        android:text="Животот е круг"
+        android:gravity="center"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/LoginEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        app:layout_constraintTop_toBottomOf="@+id/txtGlavenNaslov"
+        android:layout_marginTop="100dp"/>
+
+    <EditText
+        android:id="@+id/LoginPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Лозинка"
+        android:inputType="textPassword"
+        app:layout_constraintTop_toBottomOf="@+id/LoginEmail"
+        android:layout_marginTop="100dp"/>
+
+    <Button
+        android:id="@+id/buttonLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/LoginPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:text="Најави се"
+        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:textColor="@color/black"
+        android:onClick="Login" />
+
+   <TextView
+       android:id="@+id/txtRegister"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintRight_toRightOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/LoginPassword"
+       android:text="Регистрирај се"
+       android:textStyle="bold"
+       android:textSize="16dp"
+       android:layout_marginRight="20dp"
+       android:layout_marginTop="60dp"
+       android:textColor="@color/teal_200"
+       android:clickable="true"
+       android:onClick="Register"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
