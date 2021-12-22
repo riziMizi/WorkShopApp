@@ -30,6 +30,9 @@
             android:exported="false"
             android:parentActivityName=".PostaroLiceActivity" />
         <activity
+            android:name=".ShowGoogleMapActivity"
+            android:exported="false" />
+        <activity
             android:name=".GoogleMapActivity"
             android:exported="false">
             <meta-data

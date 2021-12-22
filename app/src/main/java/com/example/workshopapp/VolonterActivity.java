@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class VolonterActivity extends AppCompatActivity {
 
@@ -130,6 +131,8 @@ public class VolonterActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 double rastojanie = 0;
+                double rastojanieKm = 0;
+
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Baranje baranje = dataSnapshot.getValue(Baranje.class);
                     if(myLocation != null) {
@@ -137,15 +140,20 @@ public class VolonterActivity extends AppCompatActivity {
                         LatLng End = new LatLng(baranje.getLatitude(), baranje.getLongitude());
                         rastojanie = PresmetajRastojanie(Start, End);
                     }
+                    rastojanieKm = rastojanie / 1000;
+                    baranje.setRastojanie((double) Math.round(rastojanieKm * 100) / 100);
                     baranje.setAktivnostId(dataSnapshot.getKey());
-                    baranje.setRastojanie((int) rastojanie);
                     if(baranje.getStatus().equals("Активно")) {
                         list.add(baranje);
                     }
                 }
 
-                //Collections.sort(list, Comparator.comparingInt(Baranje ::getRastojanie));
-
+                Collections.sort(list, new Comparator<Baranje>() {
+                    @Override
+                    public int compare(Baranje o1, Baranje o2) {
+                        return Double.valueOf(o1.getRastojanie()).compareTo(o2.getRastojanie());
+                    }
+                });
 
                 mAdapter.notifyDataSetChanged();
             }

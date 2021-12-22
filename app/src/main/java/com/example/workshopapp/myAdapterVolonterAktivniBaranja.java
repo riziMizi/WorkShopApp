@@ -3,24 +3,35 @@ package com.example.workshopapp;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdapterVolonterAktivniBaranja.ViewHolder> {
 
     private List<Baranje> myList;
     private int rowLayout;
-    private Context mContext;
+    public Context mContext;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -62,39 +73,87 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
         } else {
             viewHolder.txtVreme.setText("Време: " + baranje.getVremeOd() + " - " + baranje.getVremeDo() + "       Датум: " + baranje.getDatum());
         }
-        viewHolder.txtAdresa.setText("Адреса: " + baranje.getAdresa() + "       Растојание: " + baranje.getRastojanie());
-       // viewHolder.txtImePrezime.setText(baranje.getStatus());
+        viewHolder.txtAdresa.setText("Адреса: " + baranje.getAdresa() + "       Растојание: " + baranje.getRastojanie() + " км");
+        viewHolder.txtAdresa.setPaintFlags(viewHolder.txtAdresa.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-//        viewHolder.txtDelete.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//
-//                builder.setTitle("Потврда");
-//                builder.setMessage("Дали сте сигурни дека сакате да ја избришете оваа активност?");
-//
-//                builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Baranja");
-//                        databaseReference.child(baranje.getAktivnostId()).removeValue();
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                builder.setNegativeButton("Не", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//                AlertDialog alert = builder.create();
-//                alert.show();
-//            }
-//        });
-//        if(!baranje.getEmailVolonter().equals("")) {
-//            viewHolder.txtVolonter.setText("Волонтер: " + baranje.getEmailVolonter() + "       " + baranje.getTelefonVolonter());
-//        }
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(baranje.getUserId());
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user = snapshot.getValue(User.class);
+                    DecimalFormat decimalFormat = new DecimalFormat("##.0");
+                    if(user.getVkupnoOceni() != 0) {
+                        double ocena = (double) user.getZbirOceni() / user.getVkupnoOceni();
+                        viewHolder.txtImePrezime.setText(user.getName() + "    Oцена: " + decimalFormat.format(ocena));
+                    } else {
+                        viewHolder.txtImePrezime.setText(user.getName() + "    Oцена: /");
+                    }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        viewHolder.txtAdresa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ShowGoogleMapActivity.class);
+                intent.putExtra("lat", baranje.getLatitude());
+                intent.putExtra("lon", baranje.getLongitude());
+                v.getContext().startActivity(intent);
+            }
+        });
+
+        viewHolder.txtSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                builder.setTitle("Потврда");
+                builder.setMessage("Потврдете го вашето волонтирање за оваа активност!");
+
+                builder.setPositiveButton("Потврди", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseDatabase.getInstance().getReference("Baranja")
+                                .child(baranje.getAktivnostId()).child("status").setValue("На чекање")
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+
+                                        if(task.isSuccessful()) {
+                                            FirebaseDatabase.getInstance().getReference("Baranja")
+                                                    .child(baranje.getAktivnostId()).child("volonterUId")
+                                                    .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                        @Override
+                                                        public void onComplete(@NonNull Task<Void> task1) {
+                                                            if(task1.isSuccessful()) {
+                                                                Toast.makeText(mContext, "Успешно се пријавивте за активноста!", Toast.LENGTH_SHORT).show();
+                                                            }
+
+                                                        }
+                                                    });
+                                        } else {
+                                            Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("Одбиј", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
         viewHolder.Pic.setImageResource(R.drawable.pozadina);
     }
 

@@ -2,6 +2,7 @@ package com.example.workshopapp;
 
 public class Baranje {
     private String UserId;
+    private String VolonterUId;
     private String AktivnostId;
     private String Aktivnost;
     private String OpisAktivnost;
@@ -15,15 +16,16 @@ public class Baranje {
     private double Latitude;
     private String EmailVolonter;
     private String TelefonVolonter;
-    private int Rastojanie;
+    private double Rastojanie;
 
     public Baranje() {
 
     }
 
-    public Baranje(String userId, String aktivnost, String opisAktivnost, String vremeOd, String vremeDo, String datum,
+    public Baranje(String userId,String volonterUId, String aktivnost, String opisAktivnost, String vremeOd, String vremeDo, String datum,
                    String den, String adresa, String status, double longitude, double latitude, String emailVolonter, String telefonVolonter) {
         this.UserId = userId;
+        this.VolonterUId = volonterUId;
         this.Aktivnost = aktivnost;
         this.OpisAktivnost = opisAktivnost;
         this.VremeOd = vremeOd;
@@ -150,11 +152,19 @@ public class Baranje {
         TelefonVolonter = telefonVolonter;
     }
 
-    public int getRastojanie() {
+    public double getRastojanie() {
         return Rastojanie;
     }
 
-    public void setRastojanie(int rastojanie) {
+    public void setRastojanie(double rastojanie) {
         Rastojanie = rastojanie;
+    }
+
+    public String getVolonterUId() {
+        return VolonterUId;
+    }
+
+    public void setVolonterUId(String volonterUId) {
+        VolonterUId = volonterUId;
     }
 }
