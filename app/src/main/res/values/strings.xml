@@ -9,4 +9,11 @@
         <item>Сабота</item>
         <item>Недела</item>
     </string-array>
+
+    <string-array name="nizaStatus">
+        <item>Закажано</item>
+        <item>На чекање</item>
+        <item>Завршено</item>
+    </string-array>
+
 </resources>

@@ -261,7 +261,7 @@ public class PostaroLiceActivity extends AppCompatActivity {
         }
 
         String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Baranje baranje = new Baranje(UID, "", Aktivnost, OpisAktivnost, VremeOd, VremeDo, Datum, Denovi, Address, "Активно", Log, Lat, "", "" );
+        Baranje baranje = new Baranje(UID, "", Aktivnost, OpisAktivnost, VremeOd, VremeDo, Datum, Denovi, Address, "Активно", Log, Lat, "", "", 0, 0, "", "" );
 
         FirebaseDatabase.getInstance().getReference("Baranja")
                 .child(UUID.randomUUID().toString()).setValue(baranje).addOnCompleteListener(new OnCompleteListener<Void>() {

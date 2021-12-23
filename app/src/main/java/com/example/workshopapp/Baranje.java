@@ -17,13 +17,18 @@ public class Baranje {
     private String EmailVolonter;
     private String TelefonVolonter;
     private double Rastojanie;
+    private int OcenaVolonter;
+    private int OcenaPostaroLice;
+    private String IzvestajVolonter;
+    private String IzvestajPostaroLice;
 
     public Baranje() {
 
     }
 
     public Baranje(String userId,String volonterUId, String aktivnost, String opisAktivnost, String vremeOd, String vremeDo, String datum,
-                   String den, String adresa, String status, double longitude, double latitude, String emailVolonter, String telefonVolonter) {
+                   String den, String adresa, String status, double longitude, double latitude, String emailVolonter, String telefonVolonter,
+                    int ocenaVolonter, int ocenaPostaroLice, String izvestajVolonter, String izvestajPostaroLice) {
         this.UserId = userId;
         this.VolonterUId = volonterUId;
         this.Aktivnost = aktivnost;
@@ -38,6 +43,10 @@ public class Baranje {
         this.Latitude = latitude;
         this.EmailVolonter = emailVolonter;
         this.TelefonVolonter = telefonVolonter;
+        this.OcenaVolonter = ocenaVolonter;
+        this.OcenaPostaroLice = ocenaPostaroLice;
+        this.IzvestajVolonter = izvestajVolonter;
+        this.IzvestajPostaroLice = izvestajPostaroLice;
     }
 
     public String getUserId() {
@@ -166,5 +175,37 @@ public class Baranje {
 
     public void setVolonterUId(String volonterUId) {
         VolonterUId = volonterUId;
+    }
+
+    public int getOcenaVolonter() {
+        return OcenaVolonter;
+    }
+
+    public void setOcenaVolonter(int ocenaVolonter) {
+        OcenaVolonter = ocenaVolonter;
+    }
+
+    public int getOcenaPostaroLice() {
+        return OcenaPostaroLice;
+    }
+
+    public void setOcenaPostaroLice(int ocenaPostaroLice) {
+        OcenaPostaroLice = ocenaPostaroLice;
+    }
+
+    public String getIzvestajVolonter() {
+        return IzvestajVolonter;
+    }
+
+    public void setIzvestajVolonter(String izvestajVolonter) {
+        IzvestajVolonter = izvestajVolonter;
+    }
+
+    public String getIzvestajPostaroLice() {
+        return IzvestajPostaroLice;
+    }
+
+    public void setIzvestajPostaroLice(String izvestajPostaroLice) {
+        IzvestajPostaroLice = izvestajPostaroLice;
     }
 }

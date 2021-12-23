@@ -76,6 +76,15 @@
             android:layout_marginTop="10dp"
             android:drawableTop="@drawable/ic_send" />
 
+        <TextView
+            android:id="@+id/rw1Done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintTop_toBottomOf="@+id/rw1ImePrezime"
+            card_view:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:drawableTop="@drawable/ic_done" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

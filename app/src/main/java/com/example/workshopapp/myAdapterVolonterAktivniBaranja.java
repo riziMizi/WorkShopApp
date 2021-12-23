@@ -35,7 +35,7 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtAktivnost, txtOpisAktivnost, txtVreme, txtAdresa, txtImePrezime, txtSend;
+        public TextView txtAktivnost, txtOpisAktivnost, txtVreme, txtAdresa, txtImePrezime, txtSend, txtDone;
         public ImageView Pic;
 
         public ViewHolder(View itemView) {
@@ -46,7 +46,10 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
             txtAdresa = (TextView) itemView.findViewById(R.id.rw1Lokacija);
             txtImePrezime = (TextView) itemView.findViewById(R.id.rw1ImePrezime);
             txtSend = (TextView) itemView.findViewById(R.id.rw1Send);
+            txtDone = (TextView) itemView.findViewById(R.id.rw1Done);
             Pic = (ImageView) itemView.findViewById(R.id.rw1Picture);
+
+            txtDone.setVisibility(View.INVISIBLE);
         }
     }
 

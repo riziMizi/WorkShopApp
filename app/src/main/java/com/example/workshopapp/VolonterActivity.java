@@ -22,6 +22,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -66,15 +68,9 @@ public class VolonterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_volonter);
 
         setSupportActionBar((Toolbar) findViewById(R.id.my_toolbar));
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
         getLocationPermission();
         getDeviceLocation();
-
-        CreateList();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.list1);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -83,13 +79,11 @@ public class VolonterActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.actionbar_postaro_lice_baranja, menu);
+        inflater.inflate(R.menu.actionbar_postaro_lice, menu);
         return super.onCreateOptionsMenu(menu);
     }
     @Override
@@ -97,6 +91,8 @@ public class VolonterActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_baranja:
                 Intent intent = new Intent(this, VolonterSvojZadaciActivity.class);
+                intent.putExtra("lat", myLocation.getLatitude());
+                intent.putExtra("lon", myLocation.getLongitude());
                 startActivity(intent);
                 return true;
             case R.id.action_signout:
@@ -217,6 +213,7 @@ public class VolonterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                            myLocation = (Location) task.getResult();
+                           CreateList();
                         }else{
                             Toast.makeText(VolonterActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
                         }
