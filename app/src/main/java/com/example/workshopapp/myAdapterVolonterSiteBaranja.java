@@ -31,7 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapterVolonterSiteBaranja.ViewHolder>{
 
@@ -39,12 +41,10 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
     private int rowLayout;
     public Context mContext;
 
-    private int VkupnoOceni = 0;
-    private int ZbirOceni = 0;
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtAktivnost, txtOpisAktivnost, txtVreme, txtAdresa, txtImePrezime, txtSend, txtDone;
+        public TextView txtAktivnost, txtOpisAktivnost, txtVreme, txtAdresa, txtImePrezime,
+                txtSend, txtDone, txtKontakt, txtInfo;
         public ImageView Pic;
 
         public ViewHolder(View itemView) {
@@ -56,10 +56,12 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
             txtImePrezime = (TextView) itemView.findViewById(R.id.rw1ImePrezime);
             txtSend = (TextView) itemView.findViewById(R.id.rw1Send);
             txtDone = (TextView) itemView.findViewById(R.id.rw1Done);
+            txtKontakt = (TextView) itemView.findViewById(R.id.rw1Kontakt);
+            txtInfo = (TextView) itemView.findViewById(R.id.rw1Info);
             Pic = (ImageView) itemView.findViewById(R.id.rw1Picture);
 
             txtDone.setVisibility(View.INVISIBLE);
-
+            txtInfo.setVisibility(View.INVISIBLE);
             txtSend.setVisibility(View.INVISIBLE);
         }
     }
@@ -92,6 +94,14 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
 
         if(baranje.getStatus().equals("Закажано")) {
             viewHolder.txtDone.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.txtDone.setVisibility(View.INVISIBLE);
+        }
+
+        if(baranje.getStatus().equals("Завршено")) {
+            viewHolder.txtInfo.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.txtInfo.setVisibility(View.INVISIBLE);
         }
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(baranje.getUserId());
@@ -106,6 +116,7 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
                 } else {
                     viewHolder.txtImePrezime.setText(user.getName() + "    Oцена: /");
                 }
+                viewHolder.txtKontakt.setText("Контакт: " + user.getEmail() + "      " + user.getPhone());
             }
 
             @Override
@@ -165,33 +176,20 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
                     public void onClick(DialogInterface dialog, int whichButton) {
                         RadioButton radioButton1 = (RadioButton) layout.findViewById(radioGroup.getCheckedRadioButtonId());
                         int Ocena = Integer.parseInt(radioButton1.getText().toString());
-                        FirebaseDatabase.getInstance().getReference("Baranja")
-                                .child(baranje.getAktivnostId()).child("status").setValue("Завршено").addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                        Map<String, Object> map = new HashMap();
+
+                        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("Baranja");
+                        map.put(baranje.getAktivnostId()+"/status", "Завршено");
+                        map.put(baranje.getAktivnostId()+"/izvestajVolonter", izvestaj.getText().toString().trim());
+                        map.put(baranje.getAktivnostId()+"/ocenaPostaroLice", Ocena);
+
+                        firebaseDatabase.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if(task.isSuccessful()) {
-                                    FirebaseDatabase.getInstance().getReference("Baranja")
-                                            .child(baranje.getAktivnostId()).child("izvestajVolonter").setValue(izvestaj.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task1) {
-                                            if(task1.isSuccessful()) {
-                                                FirebaseDatabase.getInstance().getReference("Baranja")
-                                                        .child(baranje.getAktivnostId()).child("ocenaPostaroLice").setValue(Ocena).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<Void> task2) {
-                                                        if(task2.isSuccessful()) {
-                                                            DodadiOcena(baranje.getUserId(), Ocena);
-                                                            Toast.makeText(mContext, "Успешно поднесен извештај за завршената активност!", Toast.LENGTH_SHORT).show();
-                                                        } else {
-                                                            Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-                                                });
-                                            } else {
-                                                Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
+                                    Toast.makeText(mContext, "Успешно поднесен извештај за завршената активност!", Toast.LENGTH_SHORT).show();
+                                    DodadiOcena(baranje.getUserId(), Ocena);
                                 } else {
                                     Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
                                 }
@@ -206,8 +204,71 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
                         dialog.dismiss();
                     }
                 });
+                alert.show();
+            }
+        });
+
+        viewHolder.txtInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder alert = new AlertDialog.Builder(mContext);
+
+                alert.setTitle("Извештај за активноста");
+
+                LinearLayout layout = new LinearLayout(mContext);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
+                final TextView textView = new TextView(mContext);
+                textView.setText("Ваш извештај:");
+                textView.setPadding(0,10,0,0);
+                textView.setTextSize(20);
+
+                final TextView textView1 = new TextView(mContext);
+                textView1.setText(baranje.getIzvestajVolonter());
+                textView1.setPadding(0,10,0,0);
+                textView1.setTextSize(16);
+
+                final TextView textView2 = new TextView(mContext);
+                textView2.setText("Оцена: " + String.valueOf(baranje.getOcenaPostaroLice()));
+                textView2.setPadding(0,10,0,0);
+                textView2.setTextSize(16);
+
+                layout.addView(textView);
+                layout.addView(textView1);
+                layout.addView(textView2);
+
+                if(baranje.getOcenaVolonter() != 0) {
+                    final TextView textView3 = new TextView(mContext);
+                    textView3.setText("Извештај на постарото лице:");
+                    textView3.setPadding(0,10,0,0);
+                    textView3.setTextSize(20);
+
+                    final TextView textView4 = new TextView(mContext);
+                    textView4.setText(baranje.getIzvestajPostaroLice());
+                    textView4.setPadding(0,10,0,0);
+                    textView4.setTextSize(16);
+
+                    final TextView textView5 = new TextView(mContext);
+                    textView5.setText("Оцена: " + String.valueOf(baranje.getOcenaVolonter()));
+                    textView5.setPadding(0,10,0,0);
+                    textView5.setTextSize(16);
+
+                    layout.addView(textView3);
+                    layout.addView(textView4);
+                    layout.addView(textView5);
+                }
+
+                alert.setView(layout);
+
+                alert.setNegativeButton("Во ред", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                });
 
                 alert.show();
+
             }
         });
         viewHolder.Pic.setImageResource(R.drawable.pozadina);
@@ -220,40 +281,21 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
 
     private void DodadiOcena(String id, int ocena) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(id);
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User user = snapshot.getValue(User.class);
-               VkupnoOceni = user.getVkupnoOceni();
-               ZbirOceni = user.getZbirOceni();
+               int VkupnoOceni = user.getVkupnoOceni() + 1;
+               int ZbirOceni = user.getZbirOceni() + ocena;
+              user.setVkupnoOceni(VkupnoOceni);
+              user.setZbirOceni(ZbirOceni);
+              snapshot.getRef().setValue(user);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
             }
         });
-        VkupnoOceni++;
-        ZbirOceni += ocena;
-        FirebaseDatabase.getInstance().getReference("Users")
-                .child(id).child("vkupnoOceni").setValue(VkupnoOceni).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()) {
-                    FirebaseDatabase.getInstance().getReference("Users")
-                            .child(id).child("zbirOceni").setValue(ZbirOceni).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task1) {
-                            if(!task1.isSuccessful()) {
-                                Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-                } else {
-                    Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
     }
 
 }

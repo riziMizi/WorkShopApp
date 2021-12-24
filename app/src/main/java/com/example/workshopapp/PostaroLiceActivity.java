@@ -268,7 +268,6 @@ public class PostaroLiceActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {
-
                     Toast.makeText(PostaroLiceActivity.this, "Успешно поднесено барање за помош!", Toast.LENGTH_SHORT).show();
                     IzbrisiPodatociAktivnost();
                 } else {

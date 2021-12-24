@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PostaroLiceBaranjaActivity extends AppCompatActivity {
@@ -98,10 +100,28 @@ public class PostaroLiceBaranjaActivity extends AppCompatActivity {
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Baranje baranje = dataSnapshot.getValue(Baranje.class);
                     baranje.setAktivnostId(dataSnapshot.getKey());
+                    if(baranje.getStatus().equals("На чекање")) {
+                        baranje.setStatusId(1);
+                    } else if(baranje.getStatus().equals("Активно")) {
+                        baranje.setStatusId(2);
+                    } else if(baranje.getStatus().equals("Закажано")) {
+                        baranje.setStatusId(3);
+                    } else if(baranje.getStatus().equals("Завршено") && baranje.getOcenaVolonter() == 0) {
+                        baranje.setStatusId(4);
+                    } else {
+                        baranje.setStatusId(5);
+                    }
                     if(baranje.getUserId().equals(UserId)) {
                         list.add(baranje);
                     }
                 }
+                Collections.sort(list, new Comparator<Baranje>() {
+                    @Override
+                    public int compare(Baranje o1, Baranje o2) {
+                        return Integer.valueOf(o1.getStatusId()).compareTo(o2.getStatusId());
+                    }
+                });
+
                 mAdapter.notifyDataSetChanged();
             }
 

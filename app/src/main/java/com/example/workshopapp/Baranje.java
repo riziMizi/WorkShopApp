@@ -21,6 +21,7 @@ public class Baranje {
     private int OcenaPostaroLice;
     private String IzvestajVolonter;
     private String IzvestajPostaroLice;
+    private int StatusId;
 
     public Baranje() {
 
@@ -207,5 +208,13 @@ public class Baranje {
 
     public void setIzvestajPostaroLice(String izvestajPostaroLice) {
         IzvestajPostaroLice = izvestajPostaroLice;
+    }
+
+    public int getStatusId() {
+        return StatusId;
+    }
+
+    public void setStatusId(int statusId) {
+        StatusId = statusId;
     }
 }

@@ -68,10 +68,19 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/rw1Kontakt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintTop_toBottomOf="@+id/rw1ImePrezime"
+            android:textSize="15dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"/>
+
+        <TextView
             android:id="@+id/rw1Send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            card_view:layout_constraintTop_toBottomOf="@+id/rw1ImePrezime"
+            card_view:layout_constraintTop_toBottomOf="@+id/rw1Kontakt"
             card_view:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="10dp"
             android:drawableTop="@drawable/ic_send" />
@@ -80,10 +89,19 @@
             android:id="@+id/rw1Done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            card_view:layout_constraintTop_toBottomOf="@+id/rw1ImePrezime"
+            card_view:layout_constraintTop_toBottomOf="@+id/rw1Kontakt"
             card_view:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="10dp"
             android:drawableTop="@drawable/ic_done" />
+
+        <TextView
+            android:id="@+id/rw1Info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            card_view:layout_constraintTop_toBottomOf="@+id/rw1Kontakt"
+            card_view:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
+            android:drawableTop="@drawable/ic_info" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

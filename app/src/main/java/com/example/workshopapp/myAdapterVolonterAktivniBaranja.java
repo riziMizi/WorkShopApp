@@ -25,7 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdapterVolonterAktivniBaranja.ViewHolder> {
 
@@ -35,7 +37,8 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtAktivnost, txtOpisAktivnost, txtVreme, txtAdresa, txtImePrezime, txtSend, txtDone;
+        public TextView txtAktivnost, txtOpisAktivnost, txtVreme, txtAdresa, txtImePrezime,
+                txtSend, txtDone, txtKontakt, txtInfo;
         public ImageView Pic;
 
         public ViewHolder(View itemView) {
@@ -47,9 +50,13 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
             txtImePrezime = (TextView) itemView.findViewById(R.id.rw1ImePrezime);
             txtSend = (TextView) itemView.findViewById(R.id.rw1Send);
             txtDone = (TextView) itemView.findViewById(R.id.rw1Done);
+            txtKontakt = (TextView) itemView.findViewById(R.id.rw1Kontakt);
+            txtInfo = (TextView) itemView.findViewById(R.id.rw1Info);
             Pic = (ImageView) itemView.findViewById(R.id.rw1Picture);
 
             txtDone.setVisibility(View.INVISIBLE);
+            txtInfo.setVisibility(View.INVISIBLE);
+            txtKontakt.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -119,30 +126,23 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
 
                 builder.setPositiveButton("Потврди", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        FirebaseDatabase.getInstance().getReference("Baranja")
-                                .child(baranje.getAktivnostId()).child("status").setValue("На чекање")
-                                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task) {
 
-                                        if(task.isSuccessful()) {
-                                            FirebaseDatabase.getInstance().getReference("Baranja")
-                                                    .child(baranje.getAktivnostId()).child("volonterUId")
-                                                    .setValue(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                        @Override
-                                                        public void onComplete(@NonNull Task<Void> task1) {
-                                                            if(task1.isSuccessful()) {
-                                                                Toast.makeText(mContext, "Успешно се пријавивте за активноста!", Toast.LENGTH_SHORT).show();
-                                                            }
+                        Map<String, Object> map = new HashMap();
 
-                                                        }
-                                                    });
-                                        } else {
-                                            Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                        DatabaseReference firebaseDatabase = FirebaseDatabase.getInstance().getReference("Baranja");
+                        map.put(baranje.getAktivnostId()+"/status", "На чекање");
+                        map.put(baranje.getAktivnostId()+"/volonterUId", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                        firebaseDatabase.updateChildren(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if(task.isSuccessful()) {
+                                    Toast.makeText(mContext, "Успешно се пријавивте за активноста!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                         dialog.dismiss();
                     }
                 });
