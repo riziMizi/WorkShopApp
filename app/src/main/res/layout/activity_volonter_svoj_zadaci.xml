@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VolonterSvojZadaciActivity">
+    tools:context=".VolonterSvojZadaciActivity"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -13,7 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         app:title="@string/app_name"
-        android:backgroundTint="@color/teal_200"/>
+        android:backgroundTint="@color/teal_700"
+        app:titleTextColor="@color/white"/>
 
     <TextView
         android:id="@+id/VolonterSvojBaranja"
@@ -26,7 +28,8 @@
         android:textStyle="bold"
         android:textSize="20dp"
         android:layout_marginTop="15dp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:fontFamily="serif"/>
 
     <Spinner
         android:id="@+id/spinnerStatus"
@@ -38,6 +41,8 @@
         android:layout_marginTop="20dp"
         android:spinnerMode="dialog"
         android:entries="@array/nizaStatus"
+        android:theme="@style/spinnerTheme"
+        android:backgroundTint="@color/black"
         />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -18,6 +18,7 @@ import android.content.pm.PackageManager;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -91,15 +92,13 @@ public class VolonterActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_baranja:
                 Intent intent = new Intent(this, VolonterSvojZadaciActivity.class);
-                intent.putExtra("lat", myLocation.getLatitude());
-                intent.putExtra("lon", myLocation.getLongitude());
                 startActivity(intent);
                 return true;
             case R.id.action_signout:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("Одјави се");
                 builder.setMessage("Дали сте сигурни дека сакате да се одјавите?");
-                builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(Html.fromHtml("<font color='#FFFFFF'>Да</font>"), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseAuth.getInstance().signOut();
                         startActivity(new Intent(VolonterActivity.this, MainActivity.class));
@@ -107,7 +106,7 @@ public class VolonterActivity extends AppCompatActivity {
                     }
                 });
 
-                builder.setNegativeButton("Не", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Не</font>"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/rw1Picture"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             card_view:layout_constraintTop_toTopOf="parent"
             android:layout_centerInParent="true"
             android:scaleType="centerCrop" />

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +117,11 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
                 } else {
                     viewHolder.txtImePrezime.setText(user.getName() + "    Oцена: /");
                 }
-                viewHolder.txtKontakt.setText("Контакт: " + user.getEmail() + "      " + user.getPhone());
+                if(baranje.getStatus().equals("На чекање")) {
+                    viewHolder.txtKontakt.setText("");
+                } else {
+                    viewHolder.txtKontakt.setText("Контакт: " + user.getEmail() + "      " + user.getPhone());
+                }
             }
 
             @Override
@@ -172,7 +177,7 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
 
                 alert.setView(layout);
 
-                alert.setPositiveButton("Поднеси", new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(Html.fromHtml("<font color='#FFFFFF'>Поднеси</font>"), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         RadioButton radioButton1 = (RadioButton) layout.findViewById(radioGroup.getCheckedRadioButtonId());
                         int Ocena = Integer.parseInt(radioButton1.getText().toString());
@@ -199,7 +204,7 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
                     }
                 });
 
-                alert.setNegativeButton("Исклучи", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Исклучи</font>"), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }
@@ -261,7 +266,7 @@ public class myAdapterVolonterSiteBaranja extends RecyclerView.Adapter<myAdapter
 
                 alert.setView(layout);
 
-                alert.setNegativeButton("Во ред", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Во ред</font>"), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }

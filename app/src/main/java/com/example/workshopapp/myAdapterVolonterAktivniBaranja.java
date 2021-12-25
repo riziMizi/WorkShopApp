@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -124,7 +125,7 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
                 builder.setTitle("Потврда");
                 builder.setMessage("Потврдете го вашето волонтирање за оваа активност!");
 
-                builder.setPositiveButton("Потврди", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(Html.fromHtml("<font color='#FFFFFF'>Потврди</font>"), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                         Map<String, Object> map = new HashMap();
@@ -147,7 +148,7 @@ public class myAdapterVolonterAktivniBaranja extends RecyclerView.Adapter<myAdap
                     }
                 });
 
-                builder.setNegativeButton("Одбиј", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Искучи</font>"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,7 +99,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                 builder.setTitle("Потврда");
                 builder.setMessage("Дали сте сигурни дека сакате да ја избришете оваа активност?");
 
-                builder.setPositiveButton("Да", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(Html.fromHtml("<font color='#FFFFFF'>Да</font>"), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Baranja");
                         databaseReference.child(baranje.getAktivnostId()).removeValue();
@@ -106,7 +107,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                     }
                 });
 
-                builder.setNegativeButton("Не", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Не</font>"), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -123,7 +124,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                 if(baranje.getStatus().equals("На чекање")) {
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users")
                             .child(baranje.getVolonterUId());
-                    reference.addValueEventListener(new ValueEventListener() {
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                            volonter = snapshot.getValue(User.class);
@@ -140,7 +141,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                                         + "Е-маил: " +volonter.getEmail() + "\n" + "Телефонски број: " + volonter.getPhone());
                             }
 
-                            builder.setPositiveButton("Прифати", new DialogInterface.OnClickListener() {
+                            builder.setPositiveButton(Html.fromHtml("<font color='#FFFFFF'>Прифати</font>"), new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
 
                                     Map<String, Object> map = new HashMap();
@@ -154,8 +155,6 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()) {
-                                                viewHolder.txtStatus.setTextColor(Color.rgb(0,0,0));
-                                                viewHolder.txtStatus.setPaintFlags(0);
                                                 Toast.makeText(mContext, "Успешно е доделен волонтер за вашата активност!", Toast.LENGTH_SHORT).show();
                                         } else {
                                                 Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
@@ -167,7 +166,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                                 }
                             });
 
-                            builder.setNegativeButton("Одбиј", new DialogInterface.OnClickListener() {
+                            builder.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Одбиј</font>"), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Map<String, Object> map = new HashMap();
@@ -180,8 +179,6 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if(task.isSuccessful()) {
-                                                viewHolder.txtStatus.setTextColor(Color.rgb(0,0,0));
-                                                viewHolder.txtStatus.setPaintFlags(0);
                                                 Toast.makeText(mContext, "Волонтерот е одбиен.", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Toast.makeText(mContext, "Настана грешка.Обидете се повторно!", Toast.LENGTH_SHORT).show();
@@ -238,7 +235,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
 
                     alert.setView(layout);
 
-                    alert.setPositiveButton("Поднеси", new DialogInterface.OnClickListener() {
+                    alert.setPositiveButton(Html.fromHtml("<font color='#FFFFFF'>Поднеси</font>"), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             RadioButton radioButton1 = (RadioButton) layout.findViewById(radioGroup.getCheckedRadioButtonId());
                             int Ocena = Integer.parseInt(radioButton1.getText().toString());
@@ -264,7 +261,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
                         }
                     });
 
-                    alert.setNegativeButton("Исклучи", new DialogInterface.OnClickListener() {
+                    alert.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Исклучи</font>"), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             dialog.dismiss();
                         }
@@ -276,6 +273,8 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
 
         if(!baranje.getEmailVolonter().equals("")) {
             viewHolder.txtVolonter.setText("Контакт: " + baranje.getEmailVolonter() + "       " + baranje.getTelefonVolonter());
+        } else {
+            viewHolder.txtVolonter.setText("");
         }
 
         if(baranje.getOcenaVolonter() == 0) {
@@ -287,7 +286,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
         if(baranje.getOcenaVolonter() == 0 && (baranje.getStatus().equals("Завршено") || baranje.getStatus().equals("На чекање"))) {
             viewHolder.txtStatus.setTextColor(Color.rgb(55,0,179));
             viewHolder.txtStatus.setPaintFlags(viewHolder.txtStatus.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-        } else if(baranje.getOcenaVolonter() != 0 && baranje.getStatus().equals("Завршено")) {
+        } else {
             viewHolder.txtStatus.setTextColor(Color.rgb(0,0,0));
             viewHolder.txtStatus.setPaintFlags(0);
         }
@@ -345,7 +344,7 @@ public class myAdapterPostaroLice extends RecyclerView.Adapter<myAdapterPostaroL
 
                 alert.setView(layout);
 
-                alert.setNegativeButton("Во ред", new DialogInterface.OnClickListener() {
+                alert.setNegativeButton(Html.fromHtml("<font color='#FFFFFF'>Во ред</font>"), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         dialog.dismiss();
                     }

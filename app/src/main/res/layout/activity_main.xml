@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"
@@ -13,7 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/Widget.MaterialComponents.Toolbar.Primary"
         app:title="@string/app_name"
-        android:backgroundTint="@color/teal_200"/>
+        android:backgroundTint="@color/teal_700"
+        app:titleTextColor="@color/white"/>
 
     <TextView
         android:id="@+id/txtGlavenNaslov"
@@ -25,7 +27,19 @@
         android:gravity="center"
         android:textSize="30dp"
         android:textStyle="bold"
+        android:fontFamily="serif"
         android:textColor="@color/black"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/txtGlavenNaslov"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/ic_login"
+        />
 
     <EditText
         android:id="@+id/LoginEmail"
@@ -33,7 +47,10 @@
         android:layout_height="wrap_content"
         android:hint="Email"
         app:layout_constraintTop_toBottomOf="@+id/txtGlavenNaslov"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/black"
+        android:textColorHint="#7E7C7C"/>
 
     <EditText
         android:id="@+id/LoginPassword"
@@ -42,7 +59,10 @@
         android:hint="Лозинка"
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@+id/LoginEmail"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="100dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/black"
+        android:textColorHint="#7E7C7C"/>
 
     <Button
         android:id="@+id/buttonLogin"
