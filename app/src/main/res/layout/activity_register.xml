@@ -121,7 +121,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginLeft="20dp"
         android:text="Регистрирај се"
-        android:backgroundTint="@color/design_default_color_secondary_variant"
+        android:backgroundTint="@color/teal_700"
         android:textColor="@color/black"
         android:layout_marginTop="20dp"
         android:onClick="Register"/>
